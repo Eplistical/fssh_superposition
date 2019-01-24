@@ -236,7 +236,7 @@ void ehrenfest() {
             if (istep == 0) {
                 // para & header
                 ioer::info("# FSSH para: ", " Ntraj = ", Ntraj, " Nstep = ", Nstep, " dt = ", dt, " output_step = ", output_step, " output_mod = ", output_mod,
-                            " mass = ", mass, " A = ", A, " B = ", B, 
+                            " mass = ", mass, " A = ", A, " B = ", B, " C = ", C, 
                             " init_x = ", init_x, " init_px = ", init_px, 
                             " sigma_x = ", sigma_x, " sigma_px = ", sigma_px, 
                             " xwall_left = ", xwall_left, " xwall_right = ", xwall_right
