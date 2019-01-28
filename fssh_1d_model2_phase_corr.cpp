@@ -174,14 +174,14 @@ void sys(const state_t& state, state_t& state_dot, const double /* t */) {
     if (s == 0) {
         // vx <-> v0x
         double v0x = vx;
-        double v1x = sqrt(max(0.0, v0x * v0x + 2 * mass * eva[0] - 2 * mass * eva[1]));
+        double v1x = sqrt(max(0.0, v0x * v0x + 2 / mass * eva[0] - 2 / mass * eva[1]));
         state_dot[2] = zI * mass * v0x * v0x * c[0] - c[1] * (v0x * dcx[0+1*2]) - c[0] * (v0x * dcx[0+0*2]);
         state_dot[3] = zI * mass * v0x * v1x * c[1] - c[0] * (v0x * dcx[1+0*2]) - c[1] * (v0x * dcx[1+1*2]);
     }
     else {
         // vx <-> v1x
         double v1x = vx;
-        double v0x = sqrt(max(0.0, v1x * v1x + 2 * mass * eva[1] - 2 * mass * eva[0]));
+        double v0x = sqrt(max(0.0, v1x * v1x + 2 / mass * eva[1] - 2 / mass * eva[0]));
         state_dot[2] = zI * mass * v1x * v0x * c[0] - c[1] * (v1x * dcx[0+1*2]) - c[0] * (v1x * dcx[0+0*2]);
         state_dot[3] = zI * mass * v1x * v1x * c[1] - c[0] * (v1x * dcx[1+0*2]) - c[1] * (v1x * dcx[1+1*2]);
     }
