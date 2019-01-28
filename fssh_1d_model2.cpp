@@ -222,6 +222,7 @@ void fssh() {
     double n0trans = 0.0, n0refl = 0.0, n1trans = 0.0, n1refl = 0.0;
     double px0trans = 0.0, px0refl = 0.0, px1trans = 0.0, px1refl = 0.0;
     double KE = 0.0, PE = 0.0;
+    vector<int> hop_rec(Ntraj, 0);
     for (int istep(0); istep < Nstep; ++istep) {
         for (int itraj(0); itraj < Ntraj; ++itraj) {
             if (check_end(state[itraj]) == false) {
@@ -233,8 +234,8 @@ void fssh() {
                 if (enable_hop) {
                     int hopflag = hopper(state[itraj]);
                     switch (hopflag) {
-                        case HOP_UP : hopup += 1.0; break;
-                        case HOP_DN : hopdn += 1.0; break;
+                        case HOP_UP : hopup += 1.0; hop_rec[itraj] += 1; break;
+                        case HOP_DN : hopdn += 1.0; hop_rec[itraj] += 1; break;
                         case HOP_FR : hopfr += 1.0; break;
                         case HOP_RJ : hoprj += 1.0; break;
                         default : break;
@@ -351,6 +352,11 @@ void fssh() {
     }
     // hop info
     ioer::info("# hopup = ", hopup, " hopdn = ", hopdn, " hopfr = ", hopfr, " hopfr_rate = ", hopfr / (hopup + hopdn + hopfr));
+    vector<int> hop_stat(50,0);
+    for (int itraj(0); itraj < Ntraj; ++itraj) {
+        hop_stat[hop_rec[itraj]] += 1;
+    }
+    ioer::info("# hop stat: ", hop_stat);
 }
 
 void check_surf() {
