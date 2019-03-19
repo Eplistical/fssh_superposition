@@ -12,9 +12,16 @@ fig, axes = plt.subplots(3,2, figsize=(10,8))
 plt.subplots_adjust(top=0.9, bottom=0.18, left=0.1, right=0.9,hspace=0, wspace=0.25)
 
 for i, A in enumerate(('0.02', '0.05', '0.10')):
-    e = np.loadtxt('e.A%s.scan_p.out' % (A))
+    e_raw = np.loadtxt('e.A%s.scan_p.out' % (A))
     f = np.loadtxt('f.A%s.scan_p.out' % (A))
     fc = np.loadtxt('fc.A%s.scan_p.out' % (A))
+
+    # exact -- diab repr
+    e = np.copy(e_raw)
+    e[:,1], e[:,3] = e_raw[:,3], e_raw[:,1]
+    e[:,2], e[:,4] = e_raw[:,4], e_raw[:,2]
+    e[:,5], e[:,7] = e_raw[:,7], e_raw[:,5]
+    e[:,6], e[:,8] = e_raw[:,8], e_raw[:,6]
 
     plot_trans_px_n(axes[i,0], e, f, fc)
     plot_trans_px_px(axes[i,1], e, f, fc)

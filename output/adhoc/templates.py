@@ -47,8 +47,8 @@ def set_y_label(axes, ticklabels):
 
 
 def plot_trans_px_n(ax, e, f, fc, labels=default_labels):
-    ax.plot(e[:,0], e[:,3], marker='s', color='green', linestyle='solid', linewidth=2, label=labels[0])
-    ax.plot(e[:,0], e[:,1], marker='s', color='#4682B4', linestyle='solid', linewidth=2, label=labels[1])
+    ax.plot(e[:,0], e[:,1], marker='s', color='green', linestyle='solid', linewidth=2, label=labels[0])
+    ax.plot(e[:,0], e[:,3], marker='s', color='#4682B4', linestyle='solid', linewidth=2, label=labels[1])
 
     ax.plot(f[:,0], f[:,1], marker='', color='orange', linestyle='dashed', linewidth=2, label=labels[2])
     ax.plot(f[:,0], f[:,3], marker='', color='#BA55D3', linestyle='dashed', linewidth=2, label=labels[3])
@@ -61,8 +61,8 @@ def plot_trans_px_n(ax, e, f, fc, labels=default_labels):
 
 
 def plot_trans_px_px(ax, e, f, fc, labels=default_labels):
-    ax.plot(e[:,0], e[:,7], marker='s', color='green', linestyle='solid', linewidth=2, label=labels[0])
-    ax.plot(e[:,0], e[:,5], marker='s', color='#4682B4', linestyle='solid', linewidth=2, label=labels[1])
+    ax.plot(e[:,0], e[:,5], marker='s', color='green', linestyle='solid', linewidth=2, label=labels[0])
+    ax.plot(e[:,0], e[:,7], marker='s', color='#4682B4', linestyle='solid', linewidth=2, label=labels[1])
 
     ax.plot(f[:,0], f[:,5], marker='', color='orange', linestyle='dashed', linewidth=2, label=labels[2])
     ax.plot(f[:,0], f[:,7], marker='', color='#BA55D3', linestyle='dashed', linewidth=2, label=labels[3])
