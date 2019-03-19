@@ -59,9 +59,9 @@ ax.plot(xx, d01 / 10, marker='', color='brown', linestyle='dotted', linewidth=2,
 #ax.annotate('diabat 1', xy=(0.03, 0.54), xycoords='axes fraction')
 #ax.annotate('adiabat 1', xy=(0.02, 0.62), xycoords='axes fraction')
 
-ax.annotate('diabat 1', xy=(0.79, 0.28), xycoords='axes fraction')
+ax.annotate('diabat 0', xy=(0.79, 0.28), xycoords='axes fraction')
 ax.annotate('adiabat 0', xy=(0.78, 0.35), xycoords='axes fraction')
-ax.annotate('diabat 0', xy=(0.79, 0.62), xycoords='axes fraction')
+ax.annotate('diabat 1', xy=(0.79, 0.62), xycoords='axes fraction')
 ax.annotate('adiabat 1', xy=(0.78, 0.69), xycoords='axes fraction')
 
 ax.set_title('Energy Surfaces')
