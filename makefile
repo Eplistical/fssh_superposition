@@ -1,6 +1,6 @@
 CXX = g++ 
 OPT = -O3 
-LIBS = -lboost_program_options -lfftw3 -lopenblas -lpthread -lgfortran 
+LIBS = -lboost_program_options -lfftw3 -lopenblas -llapack -lpthread -lgfortran 
 
 all : exact_1d fssh_1d ehrenfest_1d fssh_1d_phase_corr exact_1d_model2 fssh_1d_model2 ehrenfest_1d_model2 fssh_1d_model2_phase_corr
 
