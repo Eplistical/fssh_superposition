@@ -33,7 +33,7 @@ axes[1].annotate('$A = 0.05$', xy=xy1, xycoords='axes fraction')
 axes[2].annotate('$A = 0.10$', xy=xy1, xycoords='axes fraction')
 
 # y lim, tick and labels
-set_y_label(axes, ['28', '30', '32'])
+set_y_label(axes, ['27', '30', '33'])
 
 # x lim, tick and labels
 set_x_label(axes, ['0','0.25','0.5','0.75','1'])
