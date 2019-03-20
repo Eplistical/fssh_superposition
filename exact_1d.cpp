@@ -126,6 +126,7 @@ void exact() {
     TU = myfftshift(TU);
     // construct VU on x grid
     vector< complex<double> > V00(M), V01(M), V10(M), V11(M);
+    vector< complex<double> > evts00(M), evts01(M), evts10(M), evts11(M);
     vector< complex<double> > H00(M), H01(M), H10(M), H11(M);
     for (int j = 0; j < M; ++j) {
         double x = xarr[j];
@@ -146,8 +147,31 @@ void exact() {
         H01[j] = H[0+1*2];
         H10[j] = H[1+0*2];
         H11[j] = H[1+1*2];
+
+        // adiab evts
+        if (j == 0) {
+            const complex<double> phase0 = evt[0+0*2] / abs(evt[0+0*2]);
+            evt[0+0*2] *= conj(phase0);
+            evt[1+0*2] *= conj(phase0);
+            const complex<double> phase1 = evt[1+1*2] / abs(evt[1+1*2]);
+            evt[0+1*2] *= conj(phase1); 
+            evt[1+1*2] *= conj(phase1);
+        }
+        else {
+            const complex<double> phase0 = conj(evts00[j-1]) * evt[0+0*2] + conj(evts10[j-1]) * evt[1+0*2];
+            evt[0+0*2] *= conj(phase0);
+            evt[1+0*2] *= conj(phase0);
+            const complex<double> phase1 = conj(evts01[j-1]) * evt[0+1*2] + conj(evts11[j-1]) * evt[1+1*2];
+            evt[0+1*2] *= conj(phase1);
+            evt[1+1*2] *= conj(phase1);
+        }
+        evts00[j] = evt[0+0*2];
+        evts01[j] = evt[0+1*2];
+        evts10[j] = evt[1+0*2];
+        evts11[j] = evt[1+1*2];
     }
     // initialized WF
+    /*
     vector< complex<double> > psi0(M, 0.0), psi1(M, 0.0);
     for (int j = 0; j < M; ++j) {
         double x = xarr[j];
@@ -157,6 +181,21 @@ void exact() {
     double nm = norm(psi0 | psi1);
     psi0 /= nm;
     psi1 /= nm;
+    */
+    // initialized WF on adiab
+    vector< complex<double> > psi0(M, 0.0), psi1(M, 0.0);
+    vector< complex<double> > psiad0(M, 0.0), psiad1(M, 0.0);
+    for (int j = 0; j < M; ++j) {
+        double x = xarr[j];
+        psiad0[j] = c0 * exp(matrixop::IMAGIZ * (kxI * x)) * exp(-pow((x - xI) / sigmax, 2));
+        psiad1[j] = c1 * exp(matrixop::IMAGIZ * (kxI * x)) * exp(-pow((x - xI) / sigmax, 2));
+    }
+    double nm = norm(psiad0 | psiad1);
+    psiad0 /= nm;
+    psiad1 /= nm;
+    psi0 = evts00 * psiad0 + evts01 * psiad1;
+    psi1 = evts10 * psiad0 + evts11 * psiad1;
+
     // covinience vairables
     vector<int> dim{ M };
     // statistics
@@ -212,7 +251,7 @@ void exact() {
             PE = real(sum(conj(psi0) * H00 * psi0 + conj(psi0) * H01 * psi1 + conj(psi1) * H10 * psi0 + conj(psi1) * H11 * psi1));
             // output
             if (istep == 0) {
-                ioer::info("# EXACT 2D ");
+                ioer::info("# EXACT 2D DIAB OUTPUT");
                 ioer::info("# para: ", " L = ", L, " M = ", M, " mass = ", mass, " A = ", A, " B = ", B, 
                                        " xI = ", xI, " sigmax = ", sigmax, " kxI = ", kxI," init_s = ", init_s, " c0 = ", c0, " c1 = ", c1,
                                        " Nstep = ", Nstep, " dt = ", dt, " output_step = ", output_step);
