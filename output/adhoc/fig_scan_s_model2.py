@@ -43,8 +43,8 @@ for i in range(2):
 
 
 
-axes[2,0].set_xlabel('$p_{init}$')
-axes[2,1].set_xlabel('$p_{init}$')
+axes[2,0].set_xlabel('$c_1^2$')
+axes[2,1].set_xlabel('$c_1^2$')
 
 # title and legend
 axes[0,0].set_title('Population')

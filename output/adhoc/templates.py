@@ -71,10 +71,15 @@ def plot_trans_px_px(ax, e, f, fc, labels=default_labels):
     ax.plot(fc[:,0], fc[:,7], marker='', color='red', linestyle='dotted', linewidth=2, label=labels[5])
 
 
+def plot_n0(ax, e, f, fc, eh):
+    ax.plot(e[:,0], e[:,1], marker='s', color='green', linestyle='solid', linewidth=2, label='exact')
+    ax.plot(eh[:,0], eh[:,1], marker='x', color='red', linestyle='dotted', linewidth=2, label='Ehrenfest')
+    ax.plot(f[:,0], f[:,1], marker='', color='orange', linestyle='dashed', linewidth=2, label='FSSH')
+    ax.plot(fc[:,0], fc[:,1], marker='', color='black', linestyle='dotted', linewidth=2, label='FSSH phase-corr')
 
 def plot_avgp(ax, e, f, fc, eh):
     ax.plot(e[:,0], e[:,1]*e[:,5] + e[:,3]*e[:,7], marker='s', color='green', linestyle='solid', linewidth=2, label='exact')
-    ax.plot(eh[:,0], eh[:,1], marker='x', color='red', linestyle='dotted', linewidth=2, label='Ehrenfest')
+    ax.plot(eh[:,0], eh[:,5], marker='x', color='red', linestyle='dotted', linewidth=2, label='Ehrenfest')
     ax.plot(f[:,0], f[:,1]*f[:,5] + f[:,3]*f[:,7], marker='', color='orange', linestyle='dashed', linewidth=2, label='FSSH')
     ax.plot(fc[:,0], fc[:,1]*fc[:,5] + fc[:,3]*fc[:,7], marker='', color='black', linestyle='dotted', linewidth=2, label='FSSH phase-corr')
 
