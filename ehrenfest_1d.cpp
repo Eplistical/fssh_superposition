@@ -185,6 +185,8 @@ void ehrenfest() {
     vector< vector< complex<double> > > lastevt_save(Ntraj);
     // statistics
     double pxtrans = 0.0, pxrefl = 0.0;
+    double n0trans = 0.0, n0refl = 0.0;
+    double n1trans = 0.0, n1refl = 0.0;
     double KE = 0.0, PE = 0.0;
     for (int istep(0); istep < Nstep; ++istep) {
         for (int itraj(0); itraj < Ntraj; ++itraj) {
@@ -203,14 +205,20 @@ void ehrenfest() {
             // data analysis
             // momentum
             pxtrans = pxrefl = 0.0;
+            n0trans = n0refl = 0.0;
+            n1trans = n1refl = 0.0;
             for_each(state.begin(), state.end(), 
-                    [&pxtrans, &pxrefl] (const state_t& st) {
+                    [&pxtrans, &pxrefl, &n0trans, &n0refl, &n1trans, &n1refl] (const state_t& st) {
                         double vx = st[1].real();
                         if (vx >= 0.0) {
                             pxtrans += mass * vx;
+                            n0trans += pow(abs(st[2]), 2);
+                            n1trans += pow(abs(st[3]), 2);
                         }
                         else {
                             pxrefl += mass * vx; 
+                            n0refl += pow(abs(st[2]), 2);
+                            n1refl += pow(abs(st[3]), 2);
                         }
                     }
                     );
@@ -239,9 +247,10 @@ void ehrenfest() {
                             " sigma_x = ", sigma_x, " sigma_px = ", sigma_px, 
                             " xwall_left = ", xwall_left, " xwall_right = ", xwall_right
                         );
-                ioer::tabout('#', "t", "pxtrans", "pxrefl", "Etot");
+                ioer::tabout('#', "t", "n0trans", "n0refl", "n1trans", "n1refl", "pxtrans", "pxrefl", "Etot");
             }
-            ioer::tabout('#', istep * dt, pxtrans / Ntraj, pxrefl / Ntraj, (KE + PE) / Ntraj);
+            ioer::tabout('#', istep * dt, n0trans / Ntraj, n0refl / Ntraj, n1trans / Ntraj, n1refl / Ntraj, 
+                                pxtrans / Ntraj, pxrefl / Ntraj, (KE + PE) / Ntraj);
 
             // check end
             bool end_flag = all_of(state.begin(), state.end(), check_end);
@@ -252,10 +261,12 @@ void ehrenfest() {
 
     }
     if (output_mod == "init_px") {
-        ioer::tabout(init_px, pxtrans, pxrefl);
+        ioer::tabout(init_px, n0trans / Ntraj, n0refl / Ntraj, n1trans / Ntraj, n1refl / Ntraj, 
+                                pxtrans / Ntraj, pxrefl / Ntraj, (KE + PE) / Ntraj);
     }
     else if (output_mod == "init_s") {
-        ioer::tabout(init_s,  pxtrans / Ntraj, pxrefl / Ntraj);
+        ioer::tabout(init_s, n0trans / Ntraj, n0refl / Ntraj, n1trans / Ntraj, n1refl / Ntraj, 
+                                pxtrans / Ntraj, pxrefl / Ntraj, (KE + PE) / Ntraj);
     }
     else {
         misc::crasher::confirm(false, "invalid output mode");
