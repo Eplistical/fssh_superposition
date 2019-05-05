@@ -360,12 +360,14 @@ void fssh() {
     // final dist
     ioer::info_nonewline("# position dist: ");
     for(const auto& st : state) {
-        ioer::info_nonewline(st[0], " ");
+        ioer::info_nonewline(st[0].real(), " ");
     }
+    ioer::info("");
     ioer::info_nonewline("# momentum dist: ");
     for(const auto& st : state) {
-        ioer::info_nonewline(st[1], " ");
+        ioer::info_nonewline(st[1].real(), " ");
     }
+    ioer::info("");
 }
 
 void check_surf() {
