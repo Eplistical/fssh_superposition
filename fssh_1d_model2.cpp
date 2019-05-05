@@ -357,6 +357,15 @@ void fssh() {
         hop_stat[hop_rec[itraj]] += 1;
     }
     ioer::info("# hop stat: ", hop_stat);
+    // final dist
+    ioer::info_nonewline("# position dist: ");
+    for(const auto& st : state) {
+        ioer::info_nonewline(st[0], " ");
+    }
+    ioer::info_nonewline("# momentum dist: ");
+    for(const auto& st : state) {
+        ioer::info_nonewline(st[1], " ");
+    }
 }
 
 void check_surf() {

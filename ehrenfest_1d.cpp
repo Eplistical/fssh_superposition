@@ -271,6 +271,16 @@ void ehrenfest() {
     else {
         misc::crasher::confirm(false, "invalid output mode");
     }
+
+    // final dist
+    ioer::info_nonewline("# position dist: ");
+    for(const auto& st : state) {
+        ioer::info_nonewline(st[0], " ");
+    }
+    ioer::info_nonewline("# momentum dist: ");
+    for(const auto& st : state) {
+        ioer::info_nonewline(st[1], " ");
+    }
 }
 
 void check_surf() {
