@@ -274,8 +274,24 @@ void exact() {
     else if (output_mod == "init_px") {
         ioer::tabout(kxI, n0trans, n0refl, n1trans, n1refl, px0trans, px0refl, px1trans, px1refl);
     }
-    else {
-    }
+    // final dist
+    psiad0 = conj(evts00) * psi0 + conj(evts10) * psi1;
+    psiad1 = conj(evts01) * psi0 + conj(evts11) * psi1;
+    nm = norm(psiad0 | psiad1);
+    psiad0 /= nm;
+    psiad1 /= nm;
+    auto psiad_k0 = myfftshift(misc::fftn(psiad0, dim));
+    auto psiad_k1 = myfftshift(misc::fftn(psiad1, dim));
+    nm = norm(psiad_k0 | psiad_k1);
+    psiad_k0 /= nm;
+    psiad_k1 /= nm;
+    ioer::info("# final adiab dist");
+    ioer::info("# xarr: ", xarr);
+    ioer::info("# |psiad0|^2: ", pow(abs(psiad0), 2));
+    ioer::info("# |psiad1|^2: ", pow(abs(psiad1), 2));
+    ioer::info("# kxarr: ", kxarr);
+    ioer::info("# |psiad_k0|^2: ", pow(abs(psiad_k0), 2));
+    ioer::info("# |psiad_k1|^2: ", pow(abs(psiad_k1), 2));
 }
 
 int main(int argc, char** argv) {
